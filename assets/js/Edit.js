@@ -47,7 +47,7 @@ class Edit {
 		    	self.frmvalidator.addValidation('email', ['req', 'email']);
 		    	self.frmvalidator.addValidation('address', ['req', 'minLength=3', 'maxLength=20']);
 		    	self.frmvalidator.addValidation('stock', ['req', 'positiveNum']);
-			} else if (self.page == 'books') {
+			} else if (self.page == 'Books') {
 				self.frmvalidator.addValidation('title', ['req']);
 		    	self.frmvalidator.addValidation('description', ['req']);
 		    	self.frmvalidator.addValidation('genre', ['req']);

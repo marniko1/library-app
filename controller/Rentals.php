@@ -19,7 +19,7 @@ class Rentals extends BaseController {
 		$this->show_view('rental');
 	}
 	public function addNewRental($client, $title1, $title2, $title3, $title4, $title5, $is_ajax = false) {
-		$num_of_books_at_client = DBRentals::numOfbooksAtClient($client);
+		$num_of_books_at_client = DBRentals::numOfBooksAtClient($client);
 		$num_of_books_in_curr_rent = 0;
 		$method_args = func_get_args();
 		unset($method_args[0]);

@@ -151,12 +151,12 @@ class FilterAndPagination{
 		var tbody_html = ``;
 		// need this for single book and single client all rentals pagination-----
 		var pg = '';
-		if (controller == 'books' || controller == 'Clients') {
+		if (controller == 'Books' || controller == 'Clients') {
 			pg = '/p1';
 		}
 		// -------------
 		for (var i = 0; i < response.length; i++) {
-			if (controller == 'book' || controller == 'Client') {
+			if (controller == 'Book' || controller == 'Client') {
 				controller = 'Rentals';
 			}
 			tbody_html += `<tr style="cursor: pointer" onclick="document.location.href='${root_url + controller}/${response[i].id + pg}'">

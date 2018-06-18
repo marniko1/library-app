@@ -48,11 +48,6 @@ class Route {
 		if ($path_arr[0] != $url_arr[0] || count($path_arr) != count($url_arr)) {
 			return;
 		} else {
-			$action = explode('@', $action);
-			self::$controller = $action[0];
-			self::$method = $action[1];
-			include_once 'controller/'.self::$controller.'.php';
-			self::$controller = new self::$controller;
 
 			if (ltrim($url, '/') == $path) {
 				self::$params = [];
@@ -66,6 +61,11 @@ class Route {
 			} else {
 				return;
 			}
+			$action = explode('@', $action);
+			self::$controller = $action[0];
+			self::$method = $action[1];
+			include_once 'controller/'.self::$controller.'.php';
+			self::$controller = new self::$controller;
 		}
 		call_user_func_array([self::$controller, self::$method], self::$params);
 		exit;

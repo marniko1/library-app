@@ -27,7 +27,7 @@
 									    <td><?php echo $value->title; ?></td>
 									    <td><?php echo $value->description; ?></td>
 									    <td title="<?php echo $value->long_genre; ?>"><?php echo $value->genre; ?></td>
-									    <td><?php echo $value->price; ?></td>
+									    <td><?php echo $value->writer_id; ?></td>
 									    <td><?php echo $value->current_stock; ?></td>
 									    <td><?php echo $value->stock; ?></td>
 								    </tr>

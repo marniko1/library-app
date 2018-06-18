@@ -1,5 +1,11 @@
 		<div class="container">
 			<div class="row">
+				<nav class="navbar col-12 row">
+					<ul class="nav col-12 justify-content-center">
+						<li class="nav-item border-right"><a class="nav-link" href="<?php echo INCL_PATH.'Admin/index';?>">Add/List/Edit Users</a></li>
+						<li class="nav-item"><a class="nav-link" id="page_2_link" href="<?php echo INCL_PATH.'Admin/panel';?>">Add Writer/Genre</a></li>
+					</ul>
+				</nav>
 				<div class="form-wrapper col-5">
 					<form class="mt-5 col-12" method="post" action="<?php echo INCL_PATH.'Admin/addNewUser';?>" id="new-user">
 						<h5>Add new user</h5>

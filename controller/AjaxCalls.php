@@ -102,8 +102,8 @@ class AjaxCalls extends BaseController {
 	}
 
 	public function prepareShortenedbooksData ($data_array) {
-		include_once 'controller/books.php';
-		$c = new books;
+		include_once 'controller/Books.php';
+		$c = new Books();
 		$c->prepareShortenedData($data_array);
 	}
 }

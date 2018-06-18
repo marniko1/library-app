@@ -67,12 +67,13 @@ window.onload = function() {
 	// if page url is single book view or single client view, only then prepare for edit button
 	var url = window.location.origin + window.location.pathname;
 	var url_part = url.replace(root_url, '').split('/');
-	if ((url_part[0] == 'Clients' || url_part[0] == 'books') && url_part[1].match(/^\d+$/)) {
+	if ((url_part[0] == 'Clients' || url_part[0] == 'Books') && url_part[1].match(/^\d+$/)) {
 		new Edit(url_part[0]);
 	}
 	// ***********************************************************************************************
 	// if page is Admin
 	if (url_part[0] == 'Admin') {
+		console.log('admin page');
 		new Edit(url_part[0]);
 		var frmvalidator = new Validator($('form#new-user'));
 

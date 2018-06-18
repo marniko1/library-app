@@ -19,6 +19,7 @@ class DB {
 
 	public static function executeSQL($sql) {
 		$db = self::getInstance();
+		$db->set_charset("utf8");
 		$req = $db->query($sql);
 		return $req;
 	}
