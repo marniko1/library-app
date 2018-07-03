@@ -1,5 +1,6 @@
 window.onload = function() {
-
+	// turn off autocomplete sugestion from browser
+	$('input').attr('autocomplete', 'off');
 	// makes ajax for pagination and filter
 	var controller = window.location.href.split('/').reverse()[1];
 	if (controller.match(/(\d+)/)) {
@@ -11,6 +12,17 @@ window.onload = function() {
     // *************************************************************************************************
 	// stylize forms on home page
     if (window.location.origin + window.location.pathname == root_url) {
+
+    	// allows maximum three genre checkboxes to be selected
+    	var genre_checkboxes = $('.checkbox-wrapper input');
+    	$(genre_checkboxes).change(function(){
+    		var checked = $('.checkbox-wrapper input:checked');
+    		if (checked.length >= 3) {
+    			$(genre_checkboxes).not(checked).attr('disabled', true);
+    		} else {
+    			$(genre_checkboxes).not(checked).attr('disabled', false);
+    		}
+    	});
     	// form validation
     	var frmvalidator = new Validator($('div.col-6.form-wrapper form'));
 
@@ -22,13 +34,17 @@ window.onload = function() {
     	frmvalidator.addValidation('address', ['req', 'minLength=3', 'maxLength=20']);
     	// add new_book fields validation rules
     	frmvalidator.addValidation('title', ['req']);
-    	frmvalidator.addValidation('price', ['req', 'positiveNum']);
+    	frmvalidator.addValidation('writer', ['req', 'proposalValidation']);
     	frmvalidator.addValidation('stock', ['req', 'moreThenNull']);
     	frmvalidator.addValidation("genre[]", ['checkedOne']);
     	frmvalidator.addValidation('description', ['req']);
     	// add new_rental fields validation rules
-    	frmvalidator.addValidation('client', ['req']);
-    	frmvalidator.addValidation('title1', ['req']);
+    	frmvalidator.addValidation('client', ['req', 'proposalValidation']);
+    	frmvalidator.addValidation('title1', ['req', 'proposalValidation']);
+    	frmvalidator.addValidation('title2', ['proposalValidation']);
+    	frmvalidator.addValidation('title3', ['proposalValidation']);
+    	frmvalidator.addValidation('title4', ['proposalValidation']);
+    	frmvalidator.addValidation('title5', ['proposalValidation']);
 
 		new FormSubmit(frmvalidator);
 		
@@ -52,7 +68,7 @@ window.onload = function() {
 			$(this).parents('div.form-wrapper.col-6').find('.checkbox-holder').removeClass('d-none');
 		});
     	// add new rental proposals filters
-    	new ShowNewRentalProposals;
+    	new ShowProposals();
 		// style for msg span
 		var msg_span = $('div.form-wrapper span');
 		if (msg_span) {
@@ -64,28 +80,32 @@ window.onload = function() {
 		}
 	}
 	// ***********************************************************************************************
-	// if page url is single book view or single client view, only then prepare for edit button
+	// if page url is single book view or single client view or single writer view, only then prepare for edit button
 	var url = window.location.origin + window.location.pathname;
 	var url_part = url.replace(root_url, '').split('/');
-	if ((url_part[0] == 'Clients' || url_part[0] == 'Books') && url_part[1].match(/^\d+$/)) {
+	if ((url_part[0] == 'Clients' || url_part[0] == 'Books' || url_part[0] == 'Writers') && url_part[1].match(/^\d+$/)) {
 		new Edit(url_part[0]);
 	}
 	// ***********************************************************************************************
 	// if page is Admin
 	if (url_part[0] == 'Admin') {
-		console.log('admin page');
 		new Edit(url_part[0]);
-		var frmvalidator = new Validator($('form#new-user'));
+		var frmvalidator = new Validator($('form'));
 
 		frmvalidator.addValidation('username', ['req', 'minLength=3', 'maxLength=20']);
     	frmvalidator.addValidation('full_name', ['req', 'minLength=6', 'maxLength=40']);
     	frmvalidator.addValidation('password', ['req', 'passConfirm=#co_password']);
     	frmvalidator.addValidation('co_password', ['req', 'passConfirm=#password']);
 
+    	frmvalidator.addValidation('first_name', ['req', 'minLength=3', 'maxLength=20']);
+    	frmvalidator.addValidation('last_name', ['req', 'minLength=3', 'maxLength=20']);
+    	
+    	frmvalidator.addValidation('genre_title', ['req', 'minLength=3', 'maxLength=20']);
+
     	jQuery('.submit').on('click', function(e){
     		e.preventDefault();
-    		if (frmvalidator.validation($('form#new-user'))) {
-    			$('form#new-user').submit();
+    		if (frmvalidator.validation($(this).parents('form'))) {
+    			$(this).parents('form').submit();
     		}
     	});
     	var msg_span = $('div.form-wrapper span');

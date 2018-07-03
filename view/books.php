@@ -8,13 +8,13 @@
 						<caption>List of books</caption>
 						<thead class="thead-dark">
 						    <tr>
-						      	<th scope="col" style="width: 5%">#</th>
-						      	<th scope="col" style="width: 30%">Title</th>
-						      	<th scope="col" style="width: 35%">Description</th>
+						      	<th scope="col" style="width: 2%">#</th>
+						      	<th scope="col" style="width: 25%">Title</th>
+						      	<th scope="col" style="width: 39%">Description</th>
 						      	<th scope="col" style="width: 10%">Genre</th>
-						      	<th scope="col" style="width: 10%">Price</th>
-						      	<th scope="col" style="width: 5%">CurSt</th>
-						      	<th scope="col" style="width: 5%">Stock</th>
+						      	<th scope="col" style="width: 20%">Writer</th>
+						      	<th scope="col" style="width: 1%">CurSt</th>
+						      	<th scope="col" style="width: 1%">Stock</th>
 						    </tr>
 						</thead>
 						<div class="table-content">
@@ -27,7 +27,7 @@
 									    <td><?php echo $value->title; ?></td>
 									    <td><?php echo $value->description; ?></td>
 									    <td title="<?php echo $value->long_genre; ?>"><?php echo $value->genre; ?></td>
-									    <td><?php echo $value->writer_id; ?></td>
+									    <td><?php echo $value->writer; ?></td>
 									    <td><?php echo $value->current_stock; ?></td>
 									    <td><?php echo $value->stock; ?></td>
 								    </tr>

@@ -35,7 +35,7 @@ class FilterAndPagination{
 					if (httpReq.readyState == 4){
 						var response = JSON.parse(this.responseText);
 						if (response[0].length > 0) {
-							var tbody_html = self.prepareTbodyHTML(controller, response[0]);
+							var tbody_html = self.prepareTbodyHTML(controller, response[0], response[2]);
 							if (response[1].length == pagination_links.length) {
 								self.paginationLinksChangeIfNoDiff(response[1], pagination_links);
 							} else {
@@ -98,8 +98,9 @@ class FilterAndPagination{
 					httpReq.onreadystatechange = function(){
 						if (httpReq.readyState == 4){
 							var response = JSON.parse(this.responseText);
+							console.log(response);
 							if (response[0].length > 0) {
-								var tbody_html = self.prepareTbodyHTML(controller, response[0]);
+								var tbody_html = self.prepareTbodyHTML(controller, response[0], response[2]);
 								if (response[1].length == pagination_links.length) {
 									self.paginationLinksChangeIfNoDiff(response[1], pagination_links);
 								} else {
@@ -147,11 +148,11 @@ class FilterAndPagination{
 		var tbody = tbody;
 		tbody.innerHTML = tbody_html;
 	}
-	prepareTbodyHTML(controller, response) {
+	prepareTbodyHTML(controller, response, skip) {
 		var tbody_html = ``;
 		// need this for single book and single client all rentals pagination-----
 		var pg = '';
-		if (controller == 'Books' || controller == 'Clients') {
+		if (controller == 'Books' || controller == 'Clients' || controller == 'Writers') {
 			pg = '/p1';
 		}
 		// -------------
@@ -160,7 +161,7 @@ class FilterAndPagination{
 				controller = 'Rentals';
 			}
 			tbody_html += `<tr style="cursor: pointer" onclick="document.location.href='${root_url + controller}/${response[i].id + pg}'">
-			<th scope="row">${i+1}</th>`;
+			<th scope="row">${++skip}</th>`;
 			for (var key in response[i]) {
 				if (key != 'id' && key != 'long_genre' && key != 'total' && key != 'rented') {
 					if (key != 'genre') {

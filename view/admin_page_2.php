@@ -21,7 +21,7 @@
 							<input type="text" name="last_name" id="last_name" class="form-control">
 						</div>
 						<div class="form-group">
-							<input type="submit" value="Submit" class="btn btn-primary">
+							<input type="submit" value="Submit" class="btn btn-primary submit">
 						</div>
 					</form>
 					<span class="msg-span"><?php echo (isset($this->data['msg']['msg1'])) ? $this->data['msg']['msg1'] : false ?></span>
@@ -34,7 +34,7 @@
 							<input type="text" name="genre_title" id="genre_title" class="form-control">
 						</div>
 						<div class="form-group">
-							<input type="submit" value="Submit" class="btn btn-primary">
+							<input type="submit" value="Submit" class="btn btn-primary submit">
 						</div>
 					</form>
 					<span class="msg-span"><?php echo (isset($this->data['msg']['msg2'])) ? $this->data['msg']['msg2'] : false ?></span>

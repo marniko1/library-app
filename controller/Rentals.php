@@ -5,7 +5,7 @@ class Rentals extends BaseController {
 		$skip = 0;
 		if ($pg !== 0) {
 			$pg = substr($pg, 1);
-			$skip = $pg*2-2;
+			$skip = $pg*PG_RESULTS-PG_RESULTS;
 		}
 		$this->data['title'] = 'Rentals';
 		$this->data['rentals'] = DBRentals::getAllRentals($skip);

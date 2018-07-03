@@ -38,7 +38,14 @@ class Admin extends BaseController {
 		}
 		header("Location: ".INCL_PATH."Admin/panel");
 	}
-	public function addNewGenre() {
-
+	public function addNewGenre($genre) {
+		$req = DBGenres::insertGenreIntoDB($genre);
+		if ($req) {
+		// if (true) {
+			Msg::createMessage("msg2", "Success.");
+		} else {
+			Msg::createMessage("msg2", "Unsuccess.");
+		}
+		header("Location: ".INCL_PATH."Admin/panel");
 	}
 }

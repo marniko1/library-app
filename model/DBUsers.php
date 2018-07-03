@@ -3,18 +3,12 @@
 class DBUsers extends DB {
 	public static function getCredentials($username) {
 		$sql = "select * from users where username = '$username'";
-		$res = self::executeSQL($sql);
-		$credentials = $res->fetch_object();
-		return $credentials;
+		return self::executeSQL($sql)->fetch_object();
 	}
 	public static function getAllUsers() {
-		$data = [];
 		$sql = "select * from users";
 		$res = self::executeSQL($sql);
-		while ($row = $res->fetch_object()) {
-			array_push($data, $row);
-		}
-		return $data;
+		return self::queryAndFetchInObj($sql);
 	}
 	public static function addNewUser($username, $full_name, $password, $priviledge){
 		$sql = "insert into users values (null, '$username', '$full_name', '$password', '$priviledge')";

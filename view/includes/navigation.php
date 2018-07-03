@@ -7,6 +7,7 @@
 	      <li class="nav-item"><a href="<?php echo INCL_PATH; ?>"  class="nav-link">Home</a></li>
 	      <li class="nav-item"><a href="<?php echo INCL_PATH.'Rentals/index'; ?>"  class="nav-link">Rentals</a></li>
 	      <li class="nav-item"><a href="<?php echo INCL_PATH.'Books/index'; ?>" class="nav-link">Books</a></li>
+	      <li class="nav-item"><a href="<?php echo INCL_PATH.'Writers/index'; ?>" class="nav-link">Writers</a></li>
 	      <li class="nav-item"><a href="<?php echo INCL_PATH.'Clients/index'; ?>" class="nav-link">Clients</a></li>
 	      <?php echo (Auth::admin()) ? '<li class="nav-item"><a href="'.INCL_PATH.'Admin/index" class="nav-link">Admin</a></li>' : false ?>
 	    </ul>

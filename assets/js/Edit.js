@@ -26,8 +26,55 @@ class Edit {
 			$.each(tds, function(key, td){
 				var text = $(td).text();
 				data_to_store[$(td).data('name')] = text;
-				if (text.length > 20) {
+				if (text.length > 40) {
 					$(td).html('<div  class="position-relative form-group"><textarea rows="3" style="width: 100%" name="'+$(td).data('name')+'" id="'+$(td).data('name')+'" class="form-control">'+text+'</textarea></div>');
+				} else if (self.page == 'Books' && $(td).data('name') == 'genre') {
+					// making checkboxes for book genre edit
+					var old_genres = data_to_store['genre'];
+					old_genres = old_genres.split(',');
+					var html = '<div class="checkbox-wrapper rounded position-relative" ><div class="genres-scroll">';
+					$.ajax({
+						type: "POST",
+						url: root_url + "AjaxCalls/index",
+						data: "ajax_fn=getAllGenres",
+						success: function(data){
+							var response = JSON.parse(data);
+							$.each(response, function(ke, value){
+								html += '<div class="position-relative form-check form-check-inline mr-0 pr-0 col-12"><input type="checkbox" value="'+ value.id +'" name="genre[]"  id="checkbox'+(ke+1)+'"><label for="checkbox'+(ke+1)+'" class="mb-0">'+value.title+'</label></div>';
+							});
+							html += '</div></div>';
+							$(td).html(html);
+							var checkboxes_for_edit = $('input:checkbox');
+							// checking checkboxes for old genres
+							$.each(checkboxes_for_edit, function(k, checkbox){
+								$.each(old_genres, function(kk, genre){
+									if ($(checkbox).next('label').text() == genre.trim()) {
+										$(checkbox).attr('checked', true);
+									}
+								});
+							});
+							// put eventListener onchange to control max 3 checked chekboxes
+				    		var checked = $('input:checked');
+				    		if (checked.length >= 3) {
+				    			$(checkboxes_for_edit).not(checked).attr('disabled', true);
+				    		}
+							$(checkboxes_for_edit).change(function(){
+								checked = $('input:checked');
+					    		if (checked.length >= 3) {
+					    			$(checkboxes_for_edit).not(checked).attr('disabled', true);
+					    		} else {
+					    			$(checkboxes_for_edit).not(checked).attr('disabled', false);
+					    		}
+					    	});
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+					     	alert("some error"+errorThrown);
+					 	}
+					});
+				} else if (self.page == 'Books' && $(td).data('name') == 'writer') {
+					console.log('imamo pisca');
+					$(td).html('<div class="position-relative form-group"><input type="text" value="'+text+'" style="width: 100%" name="'+$(td).data('name')+'"  id="'+$(td).data('name')+'" class="form-control proposal-input"><div class="proposals d-none"><ul class="mb-0 pl-0"></ul></div></div>');
+					new ShowProposals();
 				} else {
 					$(td).html('<div class="position-relative form-group"><input type="text" value="'+text+'" style="width: 100%" name="'+$(td).data('name')+'"  id="'+$(td).data('name')+'" class="form-control"></div>');
 				}
@@ -50,10 +97,12 @@ class Edit {
 			} else if (self.page == 'Books') {
 				self.frmvalidator.addValidation('title', ['req']);
 		    	self.frmvalidator.addValidation('description', ['req']);
-		    	self.frmvalidator.addValidation('genre', ['req']);
-		    	self.frmvalidator.addValidation('price', ['req', 'positiveNum']);
+		    	self.frmvalidator.addValidation('genre[]', ['checkedOne']);
+		    	self.frmvalidator.addValidation('writer', ['req', 'proposalValidation']);
 		    	self.frmvalidator.addValidation('current_stock', ['req', 'positiveNum']);
 		    	self.frmvalidator.addValidation('stock', ['req', 'positiveNum']);
+			} else if (self.page == 'Writers') {
+				self.frmvalidator.addValidation('writer', ['req', 'minLength=3', 'maxLength=40']);
 			} else if (self.page == 'Admin') {
 				self.frmvalidator.addValidation('edit_username', ['req', 'minLength=3', 'maxLength=20']);
 		    	self.frmvalidator.addValidation('edit_full_name', ['req', 'minLength=6', 'maxLength=40']);
@@ -104,11 +153,17 @@ class Edit {
 			} else {
 				path =  'Clients/editClientData';
 			}
-		} else if ($(form).attr('action').indexOf('books') >= 0) {
+		} else if ($(form).attr('action').indexOf('Books') >= 0) {
 			if (action == 'remove') {
-				path =  'books/removeBook';
+				path =  'Books/removeBook';
 			} else {
-				path =  'books/editBookData';
+				path =  'Books/editBookData';
+			}
+		} else if ($(form).attr('action').indexOf('Writers') >= 0) {
+			if (action == 'remove') {
+				path =  'Writers/removeWriter';
+			} else {
+				path =  'Writers/editWriterData';
 			}
 		} else if ($(form).attr('action').indexOf('Admin') >= 0) {
 			if (action == 'remove') {
@@ -149,5 +204,24 @@ class Edit {
 			}
 			
 		});
+	}
+	makeChackboxesForGenres(){
+		var html;
+		$.ajax({
+				type: "POST",
+				url: root_url + "AjaxCalls/index",
+				data: "ajax_fn=getAllGenres",
+				success: function(data){
+					var response = JSON.parse(data);
+					$.each(response, function(key, value){
+						html += '<div class="position-relative form-group"><input type="checkbox" value="'+ value.id +'" style="width: 100%" name="genres[]"  id="checkbox'+key+'" class="form-control"></div>';
+					});
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+			     	alert("some error"+errorThrown);
+			 	}
+			}).done(function(data){
+				return html;
+			});
 	}
 }

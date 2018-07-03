@@ -2,76 +2,59 @@
 
 class DBRentals extends DB {
 	public static function getAllRentals($skip) {
-		$data = [];
-		$sql = "select r.id, concat(c.first_name, \" \", c.last_name) as client, r.totals, r.created, r.due, r.opened from rentals as r 
+		$sql = "select r.id, concat(c.first_name, \" \", c.last_name) as client, r.created, r.due, r.opened from rentals as r 
 				join clients as c
 				on r.id_client = c.id
 				order by created desc
-				limit $skip,2";
-		$res = self::executeSQL($sql);
-		while ($row = $res->fetch_object()) {
-			array_push($data, $row);
-		}
-		return $data;
+				limit $skip,".PG_RESULTS;
+		return self::queryAndFetchInObj($sql);
 	}
 	public static function getSingleRental($id) {
-		$data = [];
-		$sql = "select f.id, f.title, f.price, r.id as rental_id, r.totals, r.created, r.due, r.opened, concat(c.first_name, \" \", c.last_name) as client, c.id as client_id from rentals as r 
-				join rentals_books as rf 
-				on r.id = rf.id_rental 
-				join books as f 
-				on f.id = rf.id_book 
+		$sql = "select b.id, b.title, b.writer_id, r.id as rental_id, r.created, r.due, r.opened, 
+				concat(w.first_name, \" \", w.last_name) as writer,
+				concat(c.first_name, \" \", c.last_name) as client, 
+				c.id as client_id from rentals as r 
+				join rentals_books as rb 
+				on r.id = rb.id_rental 
+				join books as b 
+				on b.id = rb.id_book 
 				join clients as c 
 				on r.id_client = c.id 
+				join writers as w 
+				on w.id = b.writer_id
 				where r.id=".$id;
-		$res = self::executeSQL($sql);
-		while ($row = $res->fetch_object()) {
-			array_push($data, $row);
-		}
-		return $data;
+		return self::queryAndFetchInObj($sql);
 	}
 	public static function getFilteredRentals ($cond_name, $cond, $skip) {
-		$data = [];
-		$sql = "select r.id, concat(c.first_name, \" \", c.last_name) as client, r.totals, r.created, r.due, r.opened from rentals as r 
+		$sql = "select r.id, concat(c.first_name, \" \", c.last_name) as client, r.created, r.due, r.opened from rentals as r 
 				join clients as c
 				on r.id_client = c.id
 				having $cond_name like '%$cond%'
 				order by created desc
-				limit $skip,2";
-		$res = self::executeSQL($sql);
-		while ($row = $res->fetch_object()) {
-			array_push($data, $row);
-		}
-		return $data;
+				limit $skip,".PG_RESULTS;
+		return self::queryAndFetchInObj($sql);
 	}
 	public static function totalRentalsNum () {
 		$sql = "select count(*) as total_rents from rentals";
-		$res = self::executeSQL($sql);
-		$total_rentals_num = $res->fetch_object();
-		return $total_rentals_num;
+		return self::executeSQL($sql)->fetch_object();
 	}
 	public static function numberOfRowsInResult ($cond_name, $cond) {
-		$sql = "select r.id, concat(c.first_name, \" \", c.last_name) as client, r.totals, r.created, r.due, r.opened from rentals as r 
+		$sql = "select r.id, concat(c.first_name, \" \", c.last_name) as client, r.created, r.due, r.opened from rentals as r 
 				join clients as c
 				on r.id_client = c.id
 				having $cond_name like '%$cond%'";
-		$num_of_rows = self::executeSQL($sql)->num_rows;
-		return $num_of_rows;
+		return self::executeSQL($sql)->num_rows;
 	}
 	public static function insertRentalIntoDB ($client, $title1, $title2, $title3, $title4, $title5) {
 		$sql = "call INSERT_RENTAL('$client', '$title1', '$title2', '$title3', '$title4', '$title5')";
-		$req = self::executeSQL($sql);
-		return $req;
+		return self::executeSQL($sql);
 	}
 	public static function closeRental ($id_rental, $id_client) {
 		$sql = "call CLOSE_RENTAL($id_rental, $id_client)";
-		$req = self::executeSQL($sql);
-		return $req;
+		return self::executeSQL($sql);
 	}
 	public static function numOfBooksAtClient ($client) {
-		// $sql = "call NUM_OF_bookS_AT_CLIENT($client)";
 		$sql = "select stock from clients where concat(first_name, \" \", last_name) = '$client'";
-		$res = self::executeSQL($sql);
-		return $res->fetch_object();
+		return self::executeSQL($sql)->fetch_object();
 	}
 }

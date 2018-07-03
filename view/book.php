@@ -1,6 +1,9 @@
+		<?php 
+		// var_dump($this->data); 
+		?>
 		<div class="container">
 			<div class="row">
-				<form method="post" action="<?php echo INCL_PATH.'books/removeBook';?>" class="edit_form">
+				<form method="post" action="<?php echo INCL_PATH.'Books/removeBook';?>" class="edit_form">
 					<table class="table mt-5 main client_book">
 						<thead class="thead-dark">
 						    <tr>
@@ -8,7 +11,7 @@
 							    <th scope="col" style="width: 30%">Title</th>
 						      	<th scope="col" style="width: 35%">Description</th>
 						      	<th scope="col" style="width: 10%">Genre</th>
-						      	<th scope="col" style="width: 10%">Price</th>
+						      	<th scope="col" style="width: 10%">Writer</th>
 						      	<th scope="col" style="width: 5%">CurSt</th>
 						      	<th scope="col" style="width: 5%">Stock</th>
 						    </tr>
@@ -19,7 +22,7 @@
 							    <td data-name="title"><?php echo $this->data['book'][0]->title; ?></td>
 							    <td data-name="description"><?php echo $this->data['book'][0]->description; ?></td>
 							    <td data-name="genre"><?php echo $this->data['book'][0]->genre; ?></td>
-							    <td data-name="price"><?php echo $this->data['book'][0]->price; ?></td>
+							    <td data-name="writer"><?php echo $this->data['book'][0]->writer; ?></td>
 							    <td data-name="current_stock"><?php echo $this->data['book'][0]->current_stock; ?></td>
 							    <td data-name="stock"><?php echo $this->data['book'][0]->stock; ?></td>
 						    </tr>

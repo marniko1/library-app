@@ -19,6 +19,13 @@ select:-webkit-autofill {
 table.clients caption {
 	caption-side: top;
 }
+/*home page genres checkboxes scroll*/
+.genres-scroll {
+	height: 100px;
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+	overflow-x:hidden;
+}
 
 /*styles for proposals divs on home page when make new rental*/
 .form-group {

@@ -13,7 +13,7 @@
 		});
 		$(document).ready(function() {
 			var first_pagination_link = document.querySelectorAll('.pagination li a');
-			$(first_pagination_link[1]).parent('li').addClass('active');
+			$(first_pagination_link[2]).parent('li').addClass('active');
 		});
 	</script>
 	</body>

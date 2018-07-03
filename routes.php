@@ -18,6 +18,11 @@ if (Auth::logged()) {
 	Route::post('/Books/editBookData', 'Books@editBookData');
 	Route::post('/Books/removeBook', 'Books@removeBook');
 
+	Route::get('/Writers/index', 'Writers@index');
+	Route::get('/Writers/{id}/{page}', 'Writers@singleWriter', $req = ['/^\d+$/', '/^p\d+$/']);
+	Route::post('/Writers/editWriterData', 'Writers@editWriterData');
+	Route::post('/Writers/removeWriter', 'Writers@removeWriter');
+
 	Route::get('/Clients/index', 'Clients@index');
 	Route::get('/Clients/{id}/{page}', 'Clients@singleClient', $req = ['/^\d+$/', '/^p\d+$/']);
 	Route::get('/Clients/{page}', 'Clients@index', $req = ['/^p\d+$/']);
@@ -31,6 +36,7 @@ if (Auth::logged()) {
 	Route::post('/Admin/editUserData', 'Admin@editUserData');
 	Route::post('/Admin/removeUser', 'Admin@removeUser');
 	Route::post('/Admin/addNewWriter', 'Admin@addNewWriter');
+	Route::post('/Admin/addNewGenre', 'Admin@addNewGenre');
 	// Route::post('/Admin/addNewUser', 'Admin@addNewUser');
 
 	Route::get('/AjaxCalls/index', 'AjaxCalls@index');

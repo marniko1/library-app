@@ -38,12 +38,22 @@ class FormSubmit {
 				checkbox = checkbox.toString().replace(/,/g, ', ');
 				params.push(checkbox);
 			}
+			// replace single quotes
+			$.each(params, function(key, param){
+				params[key] = param.replace(/\'/g, '\\\'');
+			});
+			// replace double quotes
+			$.each(params, function(key, param){
+				params[key] = param.replace(/\"/g, '\\\"');
+			});
+			console.log(params);
 			$.ajax({
 				type: "POST",
 				url: root_url + "AjaxCalls/index",
 				data: "ajax_fn=submitForm&params=" + JSON.stringify(params) + "&controller=" + controller + "&method=" + method,
 				success: function(data){
 					var response = JSON.parse(data);
+					console.log(response);
 					var keys = Object.keys(response);
 					if (keys[0].match(/^msg\d$/)) {
 						$(self).parents('div.form-wrapper').find('span.msg-span').text(response[keys[0]]);

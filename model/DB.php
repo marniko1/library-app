@@ -3,6 +3,7 @@ require ROOT_DIR.'config/database_conn.php';
 
 class DB {
 
+	public static $data = [];
 	public static $conn;
 	public static $instance;
 
@@ -20,7 +21,15 @@ class DB {
 	public static function executeSQL($sql) {
 		$db = self::getInstance();
 		$db->set_charset("utf8");
-		$req = $db->query($sql);
-		return $req;
+		$res = $db->query($sql);
+		return $res;
+	}
+	public static function queryAndFetchInObj($sql) {
+		self::$data = [];
+		$res = self::executeSQL($sql);
+		while ($row = $res->fetch_object()) {
+			array_push(self::$data, $row);
+		}
+		return self::$data;
 	}
 }

@@ -5,7 +5,7 @@ class Clients extends BaseController {
 		$skip = 0;
 		if ($pg !== 0) {
 			$pg = substr($pg, 1);
-			$skip = $pg*2-2;
+			$skip = $pg*PG_RESULTS-PG_RESULTS;
 		}
 		$this->data['title'] = 'Clients';
 		$this->data['clients'] = DBClients::getAllClients($skip);
@@ -17,7 +17,7 @@ class Clients extends BaseController {
 		$skip = 0;
 		if ($pg !== 0) {
 			$pg = substr($pg, 1);
-			$skip = $pg*2-2;
+			$skip = $pg*PG_RESULTS-PG_RESULTS;
 		}
 		$this->data['client'] = DBClients::getSingleClient($id, $skip);
 		$this->data['title'] = $this->data['client'][0]->client;

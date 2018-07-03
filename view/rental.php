@@ -5,7 +5,7 @@
 					    <tr>
 					      <th scope="col">#</th>
 					      <th scope="col">Title</th>
-					      <th scope="col">Price</th>
+					      <th scope="col">Writer</th>
 					    </tr>
 					</thead>
 					<tbody>
@@ -15,16 +15,11 @@
 							<tr>
 						      	<th scope="row"><?php echo $key+1; ?></th>
 						     	<td><?php echo '<a class="nav-link p-0" href="'.INCL_PATH.'Books/'.$value->id.'/p1">'.$value->title.'</a>'; ?></td>
-						      	<td><?php echo $value->price; ?></td>
+						      	<td><?php echo $value->writer; ?></td>
 						    </tr>
 						<?php
 						}
 						?>
-					    <tr>
-					      	<th scope="row">TOTAL</th>
-					      	<td></td>
-					      	<td><?php echo $this->data['rental'][0]->totals; ?></td>
-					    </tr>
 					</tbody>
 				</table>
 				<ul>

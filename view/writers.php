@@ -3,29 +3,23 @@
 				<form class="mt-2">
 					<input type="text" name="filter" placeholder="Filter by client's name" id="filter">
 				</form>
-				<div  class="table-holder col-12" style="min-height: 450px">
+				<div  class="table-holder" style="min-height: 450px; width:100%">
 					<table class="table table-hover mt-1">
 						<caption>List of rentals</caption>
 						<thead class="thead-dark">
 						    <tr>
 						      <th scope="col" style="width: 5%">#</th>
-						      <th scope="col" style="width: 35%">Client</th>
-						      <th scope="col" style="width: 25%">Created</th>
-						      <th scope="col" style="width: 25%">Due</th>
-						      <th scope="col" style="width: 10%">Opened</th>
+						      <th scope="col" style="width: 30%">Writer</th>
 						    </tr>
 						</thead>
 						<div class="table-content">
 							<tbody class="tbody col-12">
 								<?php
-								foreach ($this->data['rentals'] as $key => $value) {
+								foreach ($this->data['writers'] as $key => $value) {
 								?>
-									<tr style="cursor: pointer;" onclick="document.location.href='<?php echo INCL_PATH.'Rentals/'.$value->id; ?>'">
+									<tr style="cursor: pointer;" onclick="document.location.href='<?php echo INCL_PATH.'Writers/'.$value->id.'/p1'; ?>'">
 									    <th scope="row"><?php echo $key+1; ?></th>
-									    <td><?php echo $value->client; ?></td>
-									    <td><?php echo $value->created; ?></td>
-									    <td><?php echo $value->due; ?></td>
-									    <td><?php echo $value->opened; ?></td>
+									    <td><?php echo $value->writer; ?></td>
 								    </tr>
 								<?php
 								}
