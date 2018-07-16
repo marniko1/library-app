@@ -63,11 +63,19 @@ class Books extends BaseController {
  		if (isset($genre[2])) {
  			$genre3 = $genre[2];
  		}
-		DBBooks::editBook($title, $description, $genre1, $genre2, $genre3, $writer, $cur_stock, $stock, $id);
+		DBBooks::editBook(addslashes($title), addslashes($description), $genre1, $genre2, $genre3, addslashes($writer), $cur_stock, $stock, $id);
 		header("Location: ".INCL_PATH.'Books/'.$id.'/p1');
 	}
 	public function removeBook($id) {
-		DBBooks::removeBook($id);
+		$book_had_been_rented = DBBooks::checkIfBookHadBeenRented($id);
+		try {
+			if ($book_had_been_rented) {
+				throw new Exception();
+			}
+			DBBooks::removeBook($id);
+		} catch (Exception $e) {
+			DBBooks::makeBookInactive($id);
+		}
 		header("Location: ".INCL_PATH.'Books/index');
 	}
 	public function prepareGenres() {

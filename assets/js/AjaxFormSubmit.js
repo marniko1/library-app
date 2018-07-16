@@ -62,6 +62,7 @@ class FormSubmit {
 							$(self).parents('div.form-wrapper').find('input').not(':input[type=submit]').val('');
 							$(self).parents('div.form-wrapper').find('textarea').val('');
 							$('input:checked').prop('checked', false);
+							$('.checkbox-wrapper input').attr('disabled', false);
 							msg_span.addClass('text-success');
 						} else {
 							msg_span.addClass('text-danger');

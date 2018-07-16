@@ -58,12 +58,19 @@ class Writers extends BaseController {
 	public function editWriterData($name, $id) {
 		$first_name = substr($name, 0, strpos($name, ' '));
 		$last_name =trim(substr($name, strpos($name, ' ')));
-		// var_dump($first_name, $last_name, $id);die;
-		DBWriters::editWriter($first_name, $last_name, $id);
+		DBWriters::editWriter(addslashes($first_name), addslashes($last_name), $id);
 		header("Location: ".INCL_PATH.'Writers/'.$id.'/p1');
 	}
 	public function removeWriter($id) {
-		DBWriters::removeWriter($id);
+		$writer_has_any_books = DBWriters::checkIfHasAnyBooks($id);
+		try {
+			if ($writer_has_any_books) {
+				throw new Exception();
+			}
+			DBWriters::removeWriter($id);
+		} catch (Exception $e) {
+			DBWriters::makeWriterInactive($id);
+		}
 		header("Location: ".INCL_PATH.'Writers/index');
 	}
 }

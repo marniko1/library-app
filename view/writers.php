@@ -1,7 +1,7 @@
 		<div class="container">
 			<div class="row">
 				<form class="mt-2">
-					<input type="text" name="filter" placeholder="Filter by client's name" id="filter">
+					<input type="text" name="filter" placeholder="Filter by writer's name" id="filter">
 				</form>
 				<div  class="table-holder" style="min-height: 450px; width:100%">
 					<table class="table table-hover mt-1">

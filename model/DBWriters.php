@@ -40,11 +40,11 @@ class DBWriters extends DB {
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function getFilteredWritersForNewBook ($cond) {
-		$sql = "select concat(first_name, \" \", last_name) as writer from writers having writer like '%$cond%' order by writer limit 6";
+		$sql = "select concat(first_name, \" \", last_name) as writer from writers where active = 'yes' having writer like '%$cond%' order by writer limit 6";
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function insertWriterIntoDB($first_name, $last_name) {
-		$sql = "insert into writers values (null, '$first_name', '$last_name')";
+		$sql = "insert into writers values (null, '$first_name', '$last_name', default)";
 		return self::executeSQL($sql);
 	}
 	public static function editWriter($first_name, $last_name, $id) {
@@ -54,5 +54,13 @@ class DBWriters extends DB {
 	public static function removeWriter($id) {
 		$sql = "delete from writers where id = $id";
 		return self::executeSQL($sql);
+	}
+	public static function makeWriterInactive($id) {
+		$sql = "update writers set active = 'no' where id = $id";
+		return self::executeSQL($sql);
+	}
+	public static function checkIfHasAnyBooks($id) {
+		$sql = "select * from books where writer_id = $id";
+		return self::executeSQL($sql)->fetch_object();
 	}
 }

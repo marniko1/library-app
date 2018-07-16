@@ -72,7 +72,6 @@ class Edit {
 					 	}
 					});
 				} else if (self.page == 'Books' && $(td).data('name') == 'writer') {
-					console.log('imamo pisca');
 					$(td).html('<div class="position-relative form-group"><input type="text" value="'+text+'" style="width: 100%" name="'+$(td).data('name')+'"  id="'+$(td).data('name')+'" class="form-control proposal-input"><div class="proposals d-none"><ul class="mb-0 pl-0"></ul></div></div>');
 					new ShowProposals();
 				} else {

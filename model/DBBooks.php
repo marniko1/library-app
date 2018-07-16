@@ -55,7 +55,7 @@ class DBBooks extends DB {
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function getFilteredBooksForNewRent ($cond) {
-		$sql = "select title, current_stock from books having title like '%$cond%' order by title limit 6";
+		$sql = "select title, current_stock from books where active = 'yes' having title like '%$cond%' order by title limit 6";
 		return self::queryAndFetchInObj($sql);
 	}
 	public static function currBookStock($title) {
@@ -72,6 +72,8 @@ class DBBooks extends DB {
 		self::executeSQL($sql);
 	}
 	public static function removeBook($id) {
+		$sql = "delete from books_genres where book_id = $id";
+		self::executeSQL($sql);
 		$sql = "delete from books where id = $id";
 		return self::executeSQL($sql);
 	}
@@ -83,5 +85,13 @@ class DBBooks extends DB {
 				on g.id = bg.genre_id 
 				where book_id in ($ids)";
 		return self::queryAndFetchInObj($sql);
+	}
+	public static function makeBookInactive($id) {
+		$sql = "update books set active = 'no' where id = $id";
+		return self::executeSQL($sql);
+	}
+	public static function checkIfBookHadBeenRented($id) {
+		$sql = "select * from rentals_books where id_book = $id";
+		return self::executeSQL($sql)->fetch_object();
 	}
 }

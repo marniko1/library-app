@@ -75,8 +75,8 @@ class AjaxCalls extends BaseController {
 		$filtered_data = $this->changePropPlaces($filtered_data);
 		$total_books_num = $filtered_data[0]->total;
 		$pagination_data = $this->preparePaginationLinks($total_books_num, $this->pg);
-		$pagination_data[0][1] = "<";
-		$pagination_data[count($pagination_data)-1][1] = ">";
+		$pagination_data[1][1] = "<";
+		$pagination_data[count($pagination_data)-2][1] = ">";
 		$response = [$filtered_data, $pagination_data, $this->skip];
 		echo json_encode($response);
 	}
@@ -96,8 +96,8 @@ class AjaxCalls extends BaseController {
 		$filtered_data = DBClients::getSingleClientRentals($this->id, $this->skip);
 		$total_rents_num = $filtered_data[0]->rented;
 		$pagination_data = $this->preparePaginationLinks($total_rents_num, $this->pg);
-		$pagination_data[0][1] = "<";
-		$pagination_data[count($pagination_data)-1][1] = ">";
+		$pagination_data[1][1] = "<";
+		$pagination_data[count($pagination_data)-2][1] = ">";
 		$response = [$filtered_data, $pagination_data, $this->skip];
 		echo json_encode($response);
 	}

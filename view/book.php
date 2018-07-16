@@ -1,6 +1,3 @@
-		<?php 
-		// var_dump($this->data); 
-		?>
 		<div class="container">
 			<div class="row">
 				<form method="post" action="<?php echo INCL_PATH.'Books/removeBook';?>" class="edit_form">
@@ -22,7 +19,7 @@
 							    <td data-name="title"><?php echo $this->data['book'][0]->title; ?></td>
 							    <td data-name="description"><?php echo $this->data['book'][0]->description; ?></td>
 							    <td data-name="genre"><?php echo $this->data['book'][0]->genre; ?></td>
-							    <td data-name="writer"><?php echo $this->data['book'][0]->writer; ?></td>
+							    <td data-name="writer"><?php echo '<a class="nav-link p-0" href="'.INCL_PATH.'Writers/'.$this->data['book'][0]->writer_id.'/p1">'.$this->data['book'][0]->writer.'</a>'; ?></td>
 							    <td data-name="current_stock"><?php echo $this->data['book'][0]->current_stock; ?></td>
 							    <td data-name="stock"><?php echo $this->data['book'][0]->stock; ?></td>
 						    </tr>

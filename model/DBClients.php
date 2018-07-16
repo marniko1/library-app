@@ -69,6 +69,6 @@ class DBClients extends DB {
 	}
 	public static function checkIfClientHadRentals($id) {
 		$sql = "select * from rentals where id_client = $id";
-		return self::executeSQL($sql);
+		return self::executeSQL($sql)->fetch_object();
 	}
 }
