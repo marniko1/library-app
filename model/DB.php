@@ -3,28 +3,28 @@ require ROOT_DIR.'config/database_conn.php';
 
 class DB {
 
-	public static $data = [];
-	public static $conn;
-	public static $instance;
+	private static $data = [];
+	private static $conn;
+	private static $instance;
 
-	public static function getInstance(){
+	private static function getInstance(){
 		if(!isset(self::$conn)){
 			self::$instance = new DB();
 		}
 		return self::$conn;
 	}
 
-	public function __construct(){
+	private function __construct(){
 		self::$conn = new mysqli(DBSERVER,DBUSER,DBPASS,DBNAME);
 	}
 
-	public static function executeSQL($sql) {
+	protected static function executeSQL($sql) {
 		$db = self::getInstance();
 		$db->set_charset("utf8");
 		$res = $db->query($sql);
 		return $res;
 	}
-	public static function queryAndFetchInObj($sql) {
+	protected static function queryAndFetchInObj($sql) {
 		self::$data = [];
 		$res = self::executeSQL($sql);
 		while ($row = $res->fetch_object()) {

@@ -10,7 +10,6 @@ class ClassAutoLoader {
 	}
 
 	public function load($file) {
-		var_dump($file);
 		if (is_file($this->path . '/' . $file . '.php')) {
             require_once( $this->path . '/' . $file . '.php' );
         }
