@@ -5,7 +5,6 @@ class ClassAutoLoader {
 
 	public function __construct($path) {
 		$this->path = $path;
-		// array specifying the class and the method to run
 		spl_autoload_register(array($this, 'load'));
 	}
 

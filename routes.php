@@ -30,14 +30,15 @@ if (Auth::logged()) {
 	Route::post('/Clients/editClientData', 'Clients@editClientData');
 	Route::post('/Clients/removeClient', 'Clients@removeClient');
 
-	Route::get('/Admin/index', 'Admin@index');
-	Route::get('/Admin/panel', 'Admin@showPageNumTwo');
-	Route::post('/Admin/addNewUser', 'Admin@addNewUser');
-	Route::post('/Admin/editUserData', 'Admin@editUserData');
-	Route::post('/Admin/removeUser', 'Admin@removeUser');
-	Route::post('/Admin/addNewWriter', 'Admin@addNewWriter');
-	Route::post('/Admin/addNewGenre', 'Admin@addNewGenre');
-	// Route::post('/Admin/addNewUser', 'Admin@addNewUser');
+	if (Auth::admin()) {
+		Route::get('/Admin/index', 'Admin@index');
+		Route::get('/Admin/panel', 'Admin@showPageNumTwo');
+		Route::post('/Admin/addNewUser', 'Admin@addNewUser');
+		Route::post('/Admin/editUserData', 'Admin@editUserData');
+		Route::post('/Admin/removeUser', 'Admin@removeUser');
+		Route::post('/Admin/addNewWriter', 'Admin@addNewWriter');
+		Route::post('/Admin/addNewGenre', 'Admin@addNewGenre');
+	}
 
 	Route::get('/AjaxCalls/index', 'AjaxCalls@index');
 
