@@ -98,7 +98,6 @@ class FilterAndPagination{
 					httpReq.onreadystatechange = function(){
 						if (httpReq.readyState == 4){
 							var response = JSON.parse(this.responseText);
-							console.log(response);
 							if (response[0].length > 0) {
 								var tbody_html = self.prepareTbodyHTML(controller, response[0], response[2]);
 								if (response[1].length == pagination_links.length) {
@@ -159,6 +158,10 @@ class FilterAndPagination{
 		for (var i = 0; i < response.length; i++) {
 			if (controller == 'Book' || controller == 'Client') {
 				controller = 'Rentals';
+			}
+			if (controller == 'Writer') {
+				controller = 'Books';
+				pg = '/p1';
 			}
 			tbody_html += `<tr style="cursor: pointer" onclick="document.location.href='${root_url + controller}/${response[i].id + pg}'">
 			<th scope="row">${++skip}</th>`;
