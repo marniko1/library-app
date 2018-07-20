@@ -38,8 +38,11 @@ class AjaxCalls extends BaseController {
 
 	public function booksFilter () {
 		$filtered_data = DBBooks::getFilteredBooks('title', $this->search_value, $this->skip);
-		$filtered_data = $this->prepareBooksGenres($filtered_data);
-		$filtered_data = $this->changePropPlaces($filtered_data);
+		// var_dump($filtered_data);
+		if (!empty($filtered_data)) {
+			$filtered_data = $this->prepareBooksGenres($filtered_data);
+			$filtered_data = $this->changePropPlaces($filtered_data);
+		}
 		$this->prepareShortenedBookData($filtered_data);
 		$total_rents_num = 0;
 		if (isset($filtered_data[0]->total)) {
@@ -62,7 +65,10 @@ class AjaxCalls extends BaseController {
 
 	public function writersFilter () {
 		$filtered_data = DBWriters::getFilteredWriters('writer', $this->search_value, $this->skip);
-		$total_writers_num = $filtered_data[0]->total;
+		$total_writers_num = 0;
+		if (isset($filtered_data[0]->total)) {
+			$total_writers_num = $filtered_data[0]->total;
+		}
 		$pagination_data = $this->preparePaginationLinks($total_writers_num, $this->pg);
 		$response = [$filtered_data, $pagination_data, $this->skip];
 		echo json_encode($response);
